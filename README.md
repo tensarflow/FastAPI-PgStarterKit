@@ -1,4 +1,4 @@
-# 🚀 Clairsense Regional Backend API: fastapi-postgresql 🎉
+# 🚀 Clairsense Regional Backend API 🎉
 
 ## Setup & Run 🏃‍♂️
 
