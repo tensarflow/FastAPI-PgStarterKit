@@ -1,6 +1,7 @@
 from typing import Optional
 
 from pydantic import ConfigDict, BaseModel
+from uuid import UUID
 
 
 # Shared properties
@@ -21,9 +22,9 @@ class ItemUpdate(ItemBase):
 
 # Properties shared by models stored in DB
 class ItemInDBBase(ItemBase):
-    id: int
+    id: UUID
     title: str
-    owner_id: int
+    owner_id: UUID
     model_config = ConfigDict(from_attributes=True)
 
 

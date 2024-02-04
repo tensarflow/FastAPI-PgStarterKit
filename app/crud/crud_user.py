@@ -1,4 +1,5 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List
+from uuid import UUID
 
 from sqlalchemy.orm import Session
 
@@ -50,6 +51,16 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def is_superuser(self, user: User) -> bool:
         return user.is_superuser
+
+    def get_multi_by_place(self, db: Session, *, place_id: UUID) -> List[User]:
+        return db.query(User).filter(User.place_id == place_id).all()
+
+    def update_place(self, db: Session, *, user: User, new_place_id: UUID) -> User:
+        user.place_id = new_place_id
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
 
 
 user = CRUDUser(User)
