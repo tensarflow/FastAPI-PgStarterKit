@@ -22,19 +22,32 @@ Then:
 - Visit http://localhost:5050/ for the PostgreSQL administrator. Upon first use you'll need to register your DB server using your **.env** file.
 
 
-## Database migration with alembic 🗂️
+
+## Database Migration with Alembic 🗂️
 
 To force a new table generation based on the new data models, you need to create a new Alembic migration script and apply it. Here are the steps:
 
-1. Generate a new Alembic migration script. This can be done by running the following command in your terminal:
-```bash
-alembic revision --autogenerate -m "description of your changes"
-```
-This command will create a new migration script in your alembic/versions directory. The script will contain the changes detected in your models.
+1. **Access the Docker Container Terminal**:
+   Before generating a new Alembic migration script, you need to access the terminal of the Docker container running your FastAPI application. Use the following command:
+   ```bash
+   docker exec -it fastapi-app /bin/bash
+   ```
+   This will give you a command line inside the `fastapi-app` container.
 
-2. Review the generated script. Make sure the changes reflect what you expect. The script will have two main functions: `upgrade()` and `downgrade()`. The `upgrade()` function applies the changes to the database, while the `downgrade()` function reverts them.
+2. **Generate a New Alembic Migration Script**:
+   Inside the Docker container, run the following command:
+   ```bash
+   alembic revision --autogenerate -m "description of your changes"
+   ```
+   This command will create a new migration script in your `alembic/versions` directory. The script will contain the changes detected in your models.
 
-3. Apply the migration. Run the following command in your terminal:
-```bash
-alembic upgrade head
-```
+3. **Review the Generated Script**:
+   Make sure the changes in the newly generated script reflect what you expect. The script will have two main functions: `upgrade()` and `downgrade()`. The `upgrade()` function applies the changes to the database, while the `downgrade()` function reverts them.
+
+4. **Apply the Migration**:
+   Still inside the Docker container, run the following command to apply the migration:
+   ```bash
+   alembic upgrade head
+   ```
+
+After completing these steps, you can exit the Docker container terminal by typing `exit`.
